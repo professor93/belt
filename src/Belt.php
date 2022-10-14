@@ -31,4 +31,9 @@ class Belt
     {
         return $this->sendRequest('get', "loan/client-credit-list/{$clientId}");
     }
+
+    public function getDepositList(int $clientId)
+    {
+        return $this->sendRequest('get', "client/deposits-list/{$clientId}");
+    }
 }
