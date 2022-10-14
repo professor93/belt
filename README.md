@@ -9,11 +9,12 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/Belt.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/Belt)
+We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can
+support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
+You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards
+on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Installation
 
@@ -21,13 +22,6 @@ You can install the package via composer:
 
 ```bash
 composer require uzbek/belt
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="belt-migrations"
-php artisan migrate
 ```
 
 You can publish the config file with:
@@ -40,20 +34,17 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'base_url' => env('BELT_BASE_URL', 'https://belt.uz/api/v1/'),
+    'username' => env('BELT_USERNAME', 'username'),
+    'password' => env('BELT_PASSWORD', 'password'),
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="belt-views"
 ```
 
 ## Usage
 
 ```php
 $belt = new Uzbek\Belt();
-echo $belt->echoPhrase('Hello, Uzbek!');
+echo $belt->getAccounts(123456);
 ```
 
 ## Testing
