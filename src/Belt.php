@@ -6,17 +6,12 @@ use Illuminate\Support\Facades\Http;
 
 class Belt
 {
-    public function __construct(
-        protected readonly string $base_url,
-        protected readonly string $username,
-        protected readonly string $password,
-    ) {
-    }
-
     private function sendRequest(string $method, string $url, array $data = [])
     {
-        return Http::baseUrl($this->base_url)
-            ->withBasicAuth($this->username, $this->password)->$method($url, $data)->json();
+        $config = config('belt');
+
+        return Http::baseUrl($config['base_url'])
+            ->withBasicAuth($config['username'], $config['password'])->$method($url, $data)->json();
     }
 
     public function getAccounts(int $clientId)
