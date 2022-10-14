@@ -6,13 +6,14 @@
         "laravel",
         "belt"
     ],
-    "homepage": "https://github.com/uzbek/belt",
+    "homepage": "https://github.com/Sodiqmirzo/laravel-belt",
     "license": "MIT",
     "authors": [
         {
             "name": "Sodiqmirzo Sattorov",
             "email": "mr.sodiqmirzosattorov17@gmail.com",
-            "role": "Developer"
+            "role": "Developer",
+            "homepage": "https://github.com/Sodiqmirzo"
         }
     ],
     "require": {
