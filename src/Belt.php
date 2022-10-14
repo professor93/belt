@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 class Belt
 {
     /**
-     * @param int $clientId
+     * @param  int  $clientId
      * @return mixed
      */
     public function getAccounts(int $clientId)
@@ -16,8 +16,8 @@ class Belt
     }
 
     /**
-     * @param int $clientId
-     * @param int $cardCode (1 - Узкарт, 2 - Хумо, 3 - Виза)
+     * @param  int  $clientId
+     * @param  int  $cardCode (1 - Узкарт, 2 - Хумо, 3 - Виза)
      * @return mixed
      */
     public function getCards(int $clientId, int $cardCode)

@@ -15,7 +15,7 @@ class BeltServiceProvider extends PackageServiceProvider
         $this->app->singleton(Belt::class, function () {
             $config = config('belt');
             Http::macro('belt', function ($method, $url, $data = []) use ($config) {
-                $url = $config['base_url'] . $url;
+                $url = $config['base_url'].$url;
 
                 return Http::withHeaders([
                     'Accept' => 'application/json',
