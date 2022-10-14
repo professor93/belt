@@ -20,7 +20,7 @@ class BeltServiceProvider extends PackageServiceProvider
                 return Http::withHeaders([
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
-                ])->withToken($config['token'])->$method($url, $data);
+                ])->withBasicAuth($config['username'], $config['password'])->$method($url, $data);
             });
         });
     }
