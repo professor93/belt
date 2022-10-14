@@ -6,34 +6,37 @@ use Illuminate\Support\Facades\Http;
 
 class Belt
 {
-    /**
-     * @param  int  $clientId
-     * @return mixed
-     */
-    public function getAccounts(int $clientId)
+
+    public function __construct(
+        protected readonly string $base_url,
+        protected readonly string $username,
+        protected readonly string $password,
+    )
     {
-        return Http::belt('get', "client/{$clientId}/accounts/active");
     }
 
-    /**
-     * @param  int  $clientId
-     * @param  int  $cardCode (1 - Узкарт, 2 - Хумо, 3 - Виза)
-     * @return mixed
-     */
+    private function sendRequest(string $method, string $url, array $data = [])
+    {
+        return Http::baseUrl($this->base_url)
+            ->withBasicAuth($this->username, $this->password)->$method($url, $data)->json();
+    }
+
+    public function getAccounts(int $clientId)
+    {
+        return $this->sendRequest('get', "client/{$clientId}/accounts/active");
+    }
+
+
     public function getCards(int $clientId, int $cardCode)
     {
-        return Http::belt('post', 'card/get-by-client-id-dgb', [
+        return $this->sendRequest('post', "card/get-by-client-id-dgb", [
             'clientId' => $clientId,
-            'cardCode' => $cardCode,
+            'cardCode' => $cardCode, /*(1 - uzcard, 2 - humo, 3 - visa)*/
         ]);
     }
 
-    /**
-     * @param $clientId
-     * @return mixed
-     */
-    public function getCredits($clientId)
+    public function getCredits(int $clientId)
     {
-        return Http::belt('get', "loan/client-credit-list/{$clientId}");
+        return $this->sendRequest('get', "loan/client-credit-list/{$clientId}");
     }
 }

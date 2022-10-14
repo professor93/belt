@@ -2,7 +2,6 @@
 
 namespace Uzbek\Belt;
 
-use Illuminate\Support\Facades\Http;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -14,14 +13,12 @@ class BeltServiceProvider extends PackageServiceProvider
 
         $this->app->singleton(Belt::class, function () {
             $config = config('belt');
-            Http::macro('belt', function ($method, $url, $data = []) use ($config) {
-                $url = $config['base_url'].$url;
 
-                return Http::withHeaders([
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                ])->withBasicAuth($config['username'], $config['password'])->$method($url, $data);
-            });
+            return new Belt(
+                base_url: $config['base_url'],
+                username: $config['username'],
+                password: $config['password'],
+            );
         });
     }
 }
