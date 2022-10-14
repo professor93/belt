@@ -1,23 +1,24 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "uzbek/belt",
+    "description": "Belt client for Laravel 9.x application",
     "keywords": [
-        ":vendor_name",
+        "Uzbek",
         "laravel",
-        ":package_slug"
+        "belt"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/uzbek/belt",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Sodiqmirzo Sattorov",
+            "email": "mr.sodiqmirzosattorov17@gmail.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.1",
         "spatie/laravel-package-tools": "^1.13.0",
+        "illuminate/http": "^9.0",
         "illuminate/contracts": "^9.0"
     },
     "require-dev": {
@@ -35,13 +36,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Uzbek\\Belt\\": "src",
+            "Uzbek\\Belt\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Uzbek\\Belt\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -61,10 +62,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Uzbek\\Belt\\BeltServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Belt": "Uzbek\\Belt\\Facades\\Belt"
             }
         }
     },
