@@ -3,6 +3,7 @@
 namespace Uzbek\Belt;
 
 use Illuminate\Support\Facades\Http;
+use Uzbek\Belt\Dtos\Customer;
 
 class Belt
 {
@@ -35,5 +36,33 @@ class Belt
     public function getDepositList(int $clientId)
     {
         return $this->sendRequest('get', "client/deposits-list/{$clientId}");
+    }
+
+    public function getCustomerByPinfl(string $pinfl)
+    {
+        $response = $this->sendRequest('get', "customer/by-pinfl/{$pinfl}");
+
+        if ($response['code'] === 0 && $response['responseBody'] && $response['responseBody']['response']) {
+            return $response['responseBody']['response'];
+        }
+        return false;
+    }
+
+    public function getCustomerByCardNumber(string $cardNumber, int $cardCode)
+    {
+        return $this->sendRequest('post', 'card/get-info', [
+            'cardNumber' => $cardNumber,
+            'cardCode' => $cardCode, /*(1 - uzcard, 2 - humo, 3 - visa)*/
+        ]);
+    }
+
+    public function createCustomer(Customer $dto)
+    {
+        $request = $this->sendRequest('post', 'customer/create', $dto->toArray());
+
+        if (isset($request['clientId'], $request['clientCode'])) {
+            return $request;
+        }
+        return false;
     }
 }
