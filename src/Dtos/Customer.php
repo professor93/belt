@@ -11,29 +11,53 @@ namespace Uzbek\Belt\Dtos;
 class Customer
 {
     public string $inn;
+
     public string $pinfl;
+
     public string $firstName;
+
     public string $lastName;
+
     public string $middleName;
+
     public ?string $birthDate;
+
     public string $birthPlace;
+
     public string $birthCountry;
+
     public string $gender;
+
     public string $citizenship;
+
     public string $docType;
+
     public string $series;
+
     public string $number;
+
     public string $docIssueDate;
+
     public string $docExpireDate;
+
     public string $docIssuePlace;
+
     public string $residenceCountry;
+
     public string $codeFilial;
+
     public ?string $residenceRegion;
+
     public ?string $residenceDistrict;
+
     public ?string $residenceAddress;
+
     public ?string $phone;
+
     public ?string $mobilePhone;
+
     public ?string $email;
+
     public ?string $maritalStatus;
 
     //toArray method
@@ -48,7 +72,7 @@ class Customer
             'birthDate' => $this->birthDate,
             'birthPlace' => $this->birthPlace,
             'birthCountry' => $this->birthCountry,
-            'gender'=> $this->gender,
+            'gender' => $this->gender,
             'citizenship' => $this->citizenship,
             'docType' => $this->docType,
             'series' => $this->series,
