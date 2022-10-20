@@ -3,7 +3,6 @@
 namespace Uzbek\Belt;
 
 use Illuminate\Support\Facades\Http;
-use Uzbek\Belt\Dtos\Customer;
 
 class Belt
 {
@@ -58,24 +57,24 @@ class Belt
     }
 
     public function createCustomer(
-        string  $inn,
-        string  $pinfl,
-        string  $firstName,
-        string  $lastName,
-        string  $middleName,
+        string $inn,
+        string $pinfl,
+        string $firstName,
+        string $lastName,
+        string $middleName,
         ?string $birthDate,
-        string  $birthPlace,
-        string  $birthCountry,
-        string  $gender,
-        string  $citizenship,
-        string  $docType,
-        string  $series,
-        string  $number,
-        string  $docIssueDate,
-        string  $docExpireDate,
-        string  $docIssuePlace,
-        string  $residenceCountry,
-        string  $codeFilial,
+        string $birthPlace,
+        string $birthCountry,
+        string $gender,
+        string $citizenship,
+        string $docType,
+        string $series,
+        string $number,
+        string $docIssueDate,
+        string $docExpireDate,
+        string $docIssuePlace,
+        string $residenceCountry,
+        string $codeFilial,
         ?string $residenceRegion,
         ?string $residenceDistrict,
         ?string $residenceAddress,
@@ -83,8 +82,7 @@ class Belt
         ?string $mobilePhone,
         ?string $email,
         ?string $maritalStatus
-    )
-    {
+    ) {
         $request = $this->sendRequest('post', 'customer/create', [
             'inn' => $inn,
             'pinfl' => $pinfl,
