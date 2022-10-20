@@ -56,9 +56,61 @@ class Belt
         ]);
     }
 
-    public function createCustomer(Customer $dto)
+    public function createCustomer(
+        string  $inn,
+        string  $pinfl,
+        string  $firstName,
+        string  $lastName,
+        string  $middleName,
+        ?string $birthDate,
+        string  $birthPlace,
+        string  $birthCountry,
+        string  $gender,
+        string  $citizenship,
+        string  $docType,
+        string  $series,
+        string  $number,
+        string  $docIssueDate,
+        string  $docExpireDate,
+        string  $docIssuePlace,
+        string  $residenceCountry,
+        string  $codeFilial,
+        ?string $residenceRegion,
+        ?string $residenceDistrict,
+        ?string $residenceAddress,
+        ?string $phone,
+        ?string $mobilePhone,
+        ?string $email,
+        ?string $maritalStatus
+    )
     {
-        $request = $this->sendRequest('post', 'customer/create', $dto->toArray());
+        $request = $this->sendRequest('post', 'customer/create', [
+            'inn' => $inn,
+            'pinfl' => $pinfl,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'middleName' => $middleName,
+            'birthDate' => $birthDate,
+            'birthPlace' => $birthPlace,
+            'birthCountry' => $birthCountry,
+            'gender' => $gender,
+            'citizenship' => $citizenship,
+            'docType' => $docType,
+            'series' => $series,
+            'number' => $number,
+            'docIssueDate' => $docIssueDate,
+            'docExpireDate' => $docExpireDate,
+            'docIssuePlace' => $docIssuePlace,
+            'residenceCountry' => $residenceCountry,
+            'codeFilial' => $codeFilial,
+            'residenceRegion' => $residenceRegion,
+            'residenceDistrict' => $residenceDistrict,
+            'residenceAddress' => $residenceAddress,
+            'phone' => $phone,
+            'mobilePhone' => $mobilePhone,
+            'email' => $email,
+            'maritalStatus' => $maritalStatus,
+        ]);
 
         if (isset($request['clientId'], $request['clientCode'])) {
             return $request;
