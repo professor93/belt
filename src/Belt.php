@@ -45,6 +45,7 @@ class Belt
         if ($response['code'] === 0 && $response['responseBody'] && $response['responseBody']['response']) {
             return $response['responseBody']['response'];
         }
+
         return false;
     }
 
@@ -115,6 +116,7 @@ class Belt
         if (isset($request['clientId'], $request['clientCode'])) {
             return $request;
         }
+
         return false;
     }
 }
