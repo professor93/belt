@@ -97,19 +97,18 @@ class Belt
     }
 
     public function openDeposit(
-        int    $depId,
-        int    $clientId,
+        int $depId,
+        int $clientId,
         string $codeFilial,
         string $date,
         string $amount,
         string $account,
         string $codeFilial2,
         string $isInfoOwner,
-        int    $depType,
+        int $depType,
         string $questionnaire,
         string $cardNumber
-    )
-    {
+    ) {
         $request = $this->sendRequest('post', 'deposit/open', [
             'depId' => $depId,
             'clientId' => $clientId,
@@ -121,7 +120,7 @@ class Belt
             'isInfoOwner' => $isInfoOwner,
             'depType' => $depType,
             'questionnaire' => $questionnaire,
-            'cardNumber' => $cardNumber
+            'cardNumber' => $cardNumber,
         ]);
 
         if ($request['code'] === 0 && $request['responseBody']) {
