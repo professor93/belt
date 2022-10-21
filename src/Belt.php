@@ -9,12 +9,7 @@ class Belt
     private function sendRequest(string $method, string $url, array $data = [])
     {
         $config = config('belt');
-        $options = [];
-        $proxy_url = $config['proxy_url'] ?? (($config['proxy_proto'] ?? '') . '://' . ($config['proxy_host'] ?? '') . ':' . ($config['proxy_port'] ?? '')) ?? '';
-        if (is_string($proxy_url) && str_contains($proxy_url, '://') && strlen($proxy_url) > 12) {
-            $options['proxy'] = $proxy_url;
-        }
-        return Http::baseUrl($config['base_url'])->withOptions($options)
+        return Http::baseUrl($config['base_url'])
             ->withBasicAuth($config['username'], $config['password'])->$method($url, $data)->json();
     }
 
