@@ -3,7 +3,6 @@
 namespace Uzbek\Belt;
 
 use Illuminate\Support\Facades\Http;
-use Uzbek\Belt\Dtos\Customer;
 
 class Belt
 {
@@ -40,10 +39,10 @@ class Belt
 
     public function getCustomerByPinfl(string $pinfl)
     {
-        $response = $this->sendRequest('get', "customer/by-pinfl/{$pinfl}");
+        $request = $this->sendRequest('get', "customer/by-pinfl/{$pinfl}");
 
-        if ($response['code'] === 0 && $response['responseBody'] && $response['responseBody']['response']) {
-            return $response['responseBody']['response'];
+        if ($request['code'] === 0 && $request['responseBody'] && $request['responseBody']['response']) {
+            return $request['responseBody']['response'];
         }
 
         return false;
@@ -57,36 +56,9 @@ class Belt
         ]);
     }
 
-    public function createCustomer(
-        string  $inn,
-        string  $pinfl,
-        string  $firstName,
-        string  $lastName,
-        string  $middleName,
-        ?string $birthDate,
-        string  $birthPlace,
-        string  $birthCountry,
-        string  $gender,
-        string  $citizenship,
-        string  $docType,
-        string  $series,
-        string  $number,
-        string  $docIssueDate,
-        string  $docExpireDate,
-        string  $docIssuePlace,
-        string  $residenceCountry,
-        string  $codeFilial,
-        ?string $residenceRegion,
-        ?string $residenceDistrict,
-        ?string $residenceAddress,
-        ?string $phone,
-        ?string $mobilePhone,
-        ?string $email,
-        ?string $maritalStatus
-    )
+    public function createCustomer(array $data)
     {
-        $request = $this->sendRequest('post', 'customer/create', [
-            'inn' => $inn,
+        /*  'inn' => $inn,
             'pinfl' => $pinfl,
             'firstName' => $firstName,
             'lastName' => $lastName,
@@ -110,11 +82,46 @@ class Belt
             'phone' => $phone,
             'mobilePhone' => $mobilePhone,
             'email' => $email,
-            'maritalStatus' => $maritalStatus,
-        ]);
+            'maritalStatus' => $maritalStatus,*/
+        $request = $this->sendRequest('post', 'customer/create', $data);
 
         if (isset($request['clientId'], $request['clientCode'])) {
             return $request;
+        }
+
+        return false;
+    }
+
+    public function openDeposit(
+        int    $depId,
+        int    $clientId,
+        string $codeFilial,
+        string $date,
+        string $amount,
+        string $account,
+        string $codeFilial2,
+        string $isInfoOwner,
+        int    $depType,
+        string $questionnaire,
+        string $cardNumber
+    )
+    {
+        $request = $this->sendRequest('post', 'deposit/open', [
+            'depId' => $depId,
+            'clientId' => $clientId,
+            'codeFilial' => $codeFilial,
+            'date' => $date,
+            'amount' => $amount,
+            'account' => $account,
+            'codeFilial2' => $codeFilial2,
+            'isInfoOwner' => $isInfoOwner,
+            'depType' => $depType,
+            'questionnaire' => $questionnaire,
+            'cardNumber' => $cardNumber
+        ]);
+
+        if ($request['code'] === 0 && $request['responseBody']) {
+            return $request['responseBody'];
         }
 
         return false;
