@@ -9,6 +9,7 @@ class Belt
     private function sendRequest(string $method, string $url, array $data = [])
     {
         $config = config('belt');
+
         return Http::baseUrl($config['base_url'])
             ->withBasicAuth($config['username'], $config['password'])->$method($url, $data)
             ->throw(function ($response, $e) {
