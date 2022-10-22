@@ -10,7 +10,10 @@ class Belt
     {
         $config = config('belt');
         return Http::baseUrl($config['base_url'])
-            ->withBasicAuth($config['username'], $config['password'])->$method($url, $data)->json();
+            ->withBasicAuth($config['username'], $config['password'])->$method($url, $data)
+            ->throw(function ($response, $e) {
+                throw $e;
+            })->json();
     }
 
     public function getAccounts(int $clientId)
@@ -38,7 +41,13 @@ class Belt
 
     public function getCustomerByPinfl(string $pinfl)
     {
-        $request = $this->sendRequest('get', "customer/by-pinfl/{$pinfl}");
+        $request = $this->sendRequest('post', "customer/by-pinfl", [
+            'pinfl' => $pinfl,
+        ]);
+
+        if ($request['code'] === 0 && $request['status'] === 404) {
+            return false;
+        }
 
         if ($request['code'] === 0 && $request['responseBody'] && $request['responseBody']['response']) {
             return $request['responseBody']['response'];
@@ -92,18 +101,19 @@ class Belt
     }
 
     public function openDeposit(
-        int $depId,
-        int $clientId,
+        int    $depId,
+        int    $clientId,
         string $codeFilial,
         string $date,
         string $amount,
         string $account,
         string $codeFilial2,
         string $isInfoOwner,
-        int $depType,
+        int    $depType,
         string $questionnaire,
         string $cardNumber
-    ) {
+    )
+    {
         $request = $this->sendRequest('post', 'deposit/open', [
             'depId' => $depId,
             'clientId' => $clientId,
