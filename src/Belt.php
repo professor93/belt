@@ -40,6 +40,20 @@ class Belt
         return $this->sendRequest('get', "client/deposits-list/{$clientId}");
     }
 
+    public function getExchangeRates($date = null, $currency = null)
+    {
+        $request = $this->sendRequest('post', "international-card/get-list-exchange-rates", [
+            'dateCross' => $date ?? date('Y.m.d'),
+            'currencyCode' => $currency ?? "ALL",
+        ]);
+
+        if ($request['code'] === 0 && $request['responseBody']['data']) {
+            return $request['responseBody']['data'];
+        }
+
+        return false;
+    }
+
     public function getCustomerByPinfl(string $pinfl)
     {
         $request = $this->sendRequest('post', "customer/by-pinfl", [
