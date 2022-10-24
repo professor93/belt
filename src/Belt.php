@@ -56,7 +56,7 @@ class Belt
 
     public function getCustomerByPinfl(string $pinfl)
     {
-        $request = $this->sendRequest('post', "customer/by-pinfl", [
+        $request = $this->sendRequest('post', 'customer/by-pinfl', [
             'pinfl' => $pinfl,
         ]);
 
@@ -116,19 +116,18 @@ class Belt
     }
 
     public function openDeposit(
-        int    $depId,
-        int    $clientId,
+        int $depId,
+        int $clientId,
         string $codeFilial,
         string $date,
         string $amount,
         string $account,
         string $codeFilial2,
         string $isInfoOwner,
-        int    $depType,
+        int $depType,
         string $questionnaire,
         string $cardNumber
-    )
-    {
+    ) {
         $request = $this->sendRequest('post', 'deposit/open', [
             'depId' => $depId,
             'clientId' => $clientId,
