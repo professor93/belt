@@ -42,9 +42,9 @@ class Belt
 
     public function getExchangeRates($date = null, $currency = null)
     {
-        $request = $this->sendRequest('post', "international-card/get-list-exchange-rates", [
+        $request = $this->sendRequest('post', 'international-card/get-list-exchange-rates', [
             'dateCross' => $date ?? date('Y.m.d'),
-            'currencyCode' => $currency ?? "ALL",
+            'currencyCode' => $currency ?? 'ALL',
         ]);
 
         if ($request['code'] === 0 && $request['responseBody']['data']) {
