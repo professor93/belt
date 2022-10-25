@@ -60,7 +60,7 @@ class Belt
             'pinfl' => $pinfl,
         ]);
 
-        if ($request['code'] === 0 && $request['status'] === 404) {
+        if (isset($request['code'], $request['status']) && $request['code'] === 0 && $request['status'] === 404) {
             return false;
         }
 
@@ -116,18 +116,19 @@ class Belt
     }
 
     public function openDeposit(
-        int $depId,
-        int $clientId,
+        int    $depId,
+        int    $clientId,
         string $codeFilial,
         string $date,
         string $amount,
         string $account,
         string $codeFilial2,
         string $isInfoOwner,
-        int $depType,
+        int    $depType,
         string $questionnaire,
         string $cardNumber
-    ) {
+    )
+    {
         $request = $this->sendRequest('post', 'deposit/open', [
             'depId' => $depId,
             'clientId' => $clientId,
