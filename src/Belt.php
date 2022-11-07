@@ -3,6 +3,7 @@
 namespace Uzbek\Belt;
 
 use Illuminate\Support\Facades\Http;
+use Uzbek\Belt\Exceptions\CustomerNotFound;
 
 class Belt
 {
@@ -37,7 +38,13 @@ class Belt
 
     public function getDepositList(int $clientId)
     {
-        return $this->sendRequest('get', "client/deposits-list/{$clientId}");
+        $request = $this->sendRequest('get', "client/deposits-list/{$clientId}");
+
+        if (isset($request['code'], $request['responseBody']) && $request['code'] === 0 && $request['responseBody']) {
+            return $request['responseBody'];
+        }
+
+        return false;
     }
 
     public function getExchangeRates($date = null, $currency = null)
@@ -47,7 +54,7 @@ class Belt
             'currencyCode' => $currency ?? 'ALL',
         ]);
 
-        if ($request['code'] === 0 && $request['responseBody']['data']) {
+        if (isset($request['code'], $request['responseBody']['data']) && $request['code'] === 0 && $request['responseBody']['data']) {
             return $request['responseBody']['data'];
         }
 
@@ -79,7 +86,7 @@ class Belt
         ]);
     }
 
-    public function createCustomer(array $data)
+    public function createCustomer(array $params)
     {
         /*  'inn' => $inn,
             'pinfl' => $pinfl,
@@ -106,7 +113,7 @@ class Belt
             'mobilePhone' => $mobilePhone,
             'email' => $email,
             'maritalStatus' => $maritalStatus,*/
-        $request = $this->sendRequest('post', 'customer/create', $data);
+        $request = $this->sendRequest('post', 'customer/create', $params);
 
         if (isset($request['clientId'], $request['clientCode'])) {
             return $request;
@@ -143,7 +150,7 @@ class Belt
             'cardNumber' => $cardNumber,
         ]);
 
-        if ($request['code'] === 0 && $request['responseBody']) {
+        if (isset($request['code'], $request['responseBody']) && $request['code'] === 0 && $request['responseBody']) {
             return $request['responseBody'];
         }
 
