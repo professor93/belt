@@ -3,7 +3,6 @@
 namespace Uzbek\Belt;
 
 use Illuminate\Support\Facades\Http;
-use Uzbek\Belt\Exceptions\CustomerNotFound;
 
 class Belt
 {
