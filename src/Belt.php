@@ -52,6 +52,17 @@ class Belt
         return false;
     }
 
+    public function getLoanCreditProductById(int $productId)
+    {
+        $request = $this->sendRequest('get', "loan/credit-product-by-id/{$productId}");
+
+        if (isset($request['data']) && $request['data']) {
+            return $request['data'];
+        }
+
+        return false;
+    }
+
     public function getDepositActiveList()
     {
         $request = $this->sendRequest('get', 'deposit/active-list');
