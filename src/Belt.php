@@ -33,7 +33,35 @@ class Belt
 
     public function getCredits(int $clientId)
     {
-        return $this->sendRequest('get', "loan/client-credit-list/{$clientId}");
+        $request = $this->sendRequest('get', "loan/client-credit-list/{$clientId}");
+
+        if (isset($request['data']) && $request['data']) {
+            return $request['data'];
+        }
+
+        return false;
+    }
+
+    public function getLoanCreditProducts(int $creditType = 2)
+    {
+        $request = $this->sendRequest('get', "loan/credit-products/{$creditType}");
+        /*1-Juridik, 2-Fizik*/
+        if (isset($request['data']) && $request['data']) {
+            return $request['data'];
+        }
+
+        return false;
+    }
+
+    public function getDepositActiveList()
+    {
+        $request = $this->sendRequest('get', 'deposit/active-list');
+
+        if (isset($request['data']) && $request['data']) {
+            return $request['data'];
+        }
+
+        return false;
     }
 
     public function getDepositList(int $clientId)
@@ -71,7 +99,7 @@ class Belt
             return false;
         }
 
-        if ($request['code'] === 0 && $request['responseBody'] && $request['responseBody']['response']) {
+        if (isset($request['code'], $request['responseBody'], $request['responseBody']['response']) && $request['code'] === 0 && $request['responseBody'] && $request['responseBody']['response']) {
             return $request['responseBody']['response'];
         }
 
