@@ -39,7 +39,7 @@ class Belt
             return $request['data'];
         }
 
-        return false;
+        return [];
     }
 
     public function getLoanCreditProducts(int $creditType = 2)
