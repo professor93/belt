@@ -75,6 +75,9 @@ class Belt
         return false;
     }
 
+    /**
+     * @throws CustomerNotFound
+     */
     public function getDepositList(int $clientId)
     {
         $request = $this->sendRequest('get', "client/deposits-list/{$clientId}");
