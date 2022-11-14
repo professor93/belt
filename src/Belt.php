@@ -31,7 +31,7 @@ class Belt
         ]);
     }
 
-    public function getCredits(int $clientId)
+    public function getClientCreditList(int $clientId)
     {
         $request = $this->sendRequest('get', "loan/client-credit-list/{$clientId}");
 
@@ -78,7 +78,7 @@ class Belt
     /**
      * @throws CustomerNotFound
      */
-    public function getDepositList(int $clientId)
+    public function getClientDepositList(int $clientId)
     {
         $request = $this->sendRequest('get', "client/deposits-list/{$clientId}");
 
