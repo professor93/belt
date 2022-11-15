@@ -94,9 +94,11 @@ class Belt
 
     public function getClientDepositBySavDepId(int $savDepId)
     {
-        return $this->sendRequest('post', "client/deposits-by-sav-dep-id", [
+        $request = $this->sendRequest('post', "client/deposits-by-sav-dep-id", [
             'savDepId' => $savDepId,
         ]);
+
+        return $request;
     }
 
     public function getClientDepositPaymentSchedule(int $savDepId)
