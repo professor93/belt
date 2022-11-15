@@ -94,14 +94,14 @@ class Belt
 
     public function getClientDepositBySavDepId(int $savDepId)
     {
-        return $this->sendRequest('post', "client/deposits-by-sav-dep-id", [
+        return $this->sendRequest('post', 'client/deposits-by-sav-dep-id', [
             'savDepId' => $savDepId,
         ]);
     }
 
     public function getClientDepositPaymentSchedule(int $savDepId)
     {
-        $request = $this->sendRequest('post', "deposit/payment-schedule", [
+        $request = $this->sendRequest('post', 'deposit/payment-schedule', [
             'savDepId' => $savDepId,
         ]);
 
@@ -188,19 +188,18 @@ class Belt
     }
 
     public function openDeposit(
-        int    $depId,
-        int    $clientId,
+        int $depId,
+        int $clientId,
         string $codeFilial,
         string $date,
         string $amount,
         string $account,
         string $codeFilial2,
         string $isInfoOwner,
-        int    $depType,
+        int $depType,
         string $questionnaire,
         string $cardNumber
-    )
-    {
+    ) {
         $request = $this->sendRequest('post', 'deposit/open', [
             'depId' => $depId,
             'clientId' => $clientId,
