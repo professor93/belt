@@ -116,7 +116,7 @@ class Belt
 
     public function getAccountTurnoverForLoan(string $account, string $codeFilial, int $pageNumber, int $pageSize, int $type, string $dateBegin, string $dateClose)
     {
-        $request = $this->sendRequest('post', "account/turnover-for-loan", [
+        $request = $this->sendRequest('post', 'account/turnover-for-loan', [
             'account' => $account,
             'codeFilial' => $codeFilial,
             'pageNumber' => $pageNumber ?? 1,
