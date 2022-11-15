@@ -14,6 +14,9 @@ class Belt
         return Http::baseUrl($config['base_url'])
             ->withBasicAuth($config['username'], $config['password'])->$method($url, $data)
             ->throw(function ($response, $e) {
+                if ($response->status() === 400 && $response->json()['code'] === 3) {
+                    throw new CustomerNotFound();
+                }
                 throw $e;
             })->json();
     }
@@ -86,16 +89,14 @@ class Belt
             throw new CustomerNotFound();
         }
 
-        return $request['data'] ?? [];
+        return $request['data'];
     }
 
     public function getClientDepositBySavDepId(int $savDepId)
     {
-        $request = $this->sendRequest('post', "client/deposits-by-sav-dep-id", [
+        return $this->sendRequest('post', "client/deposits-by-sav-dep-id", [
             'savDepId' => $savDepId,
         ]);
-
-        return $request['data'] ?? [];
     }
 
     public function getClientDepositPaymentSchedule(int $savDepId)
@@ -104,7 +105,11 @@ class Belt
             'savDepId' => $savDepId,
         ]);
 
-        return $request['data'] ?? [];
+        if (isset($request['data']) && $request['data']) {
+            return $request['data'];
+        }
+
+        return false;
     }
 
     public function getExchangeRates($date = null, $currency = null)
