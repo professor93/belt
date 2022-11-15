@@ -114,6 +114,21 @@ class Belt
         return false;
     }
 
+    public function getAccountTurnoverForLoan(string $account, string $codeFilial, int $pageNumber, int $pageSize, int $type, string $dateBegin, string $dateClose)
+    {
+        $request = $this->sendRequest('post', "account/turnover-for-loan", [
+            'account' => $account,
+            'codeFilial' => $codeFilial,
+            'pageNumber' => $pageNumber ?? 1,
+            'pageSize' => $pageSize ?? 15,
+            'type' => $type ?? 3,
+            'dateBegin' => $dateBegin,
+            'dateClose' => $dateClose,
+        ]);
+
+        return $request;
+    }
+
     public function getExchangeRates($date = null, $currency = null)
     {
         $request = $this->sendRequest('post', 'international-card/get-list-exchange-rates', [
