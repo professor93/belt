@@ -126,7 +126,11 @@ class Belt
             'dateClose' => $dateClose,
         ]);
 
-        return $request;
+        if (isset($request['response']) && $request['response']) {
+            return $request['response'];
+        }
+
+        return [];
     }
 
     public function getExchangeRates($date = null, $currency = null)
