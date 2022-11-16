@@ -4,6 +4,7 @@ namespace Uzbek\Belt;
 
 use Illuminate\Support\Facades\Http;
 use Uzbek\Belt\Exceptions\CustomerNotFound;
+use Uzbek\Belt\Exceptions\InvalidParameters;
 
 class Belt
 {
@@ -16,6 +17,9 @@ class Belt
             ->throw(function ($response, $e) {
                 if ($response->status() === 400 && $response->json()['code'] === 3) {
                     throw new CustomerNotFound();
+                }
+                if ($response->status() === 400 && $response->json()['code'] === 0) {
+                    throw new InvalidParameters();
                 }
                 throw $e;
             })->json();
@@ -86,6 +90,11 @@ class Belt
         $request = $this->sendRequest('get', "client/deposits-list/{$clientId}");
 
         if (isset($request['code'], $request['status']) && $request['code'] === 2 && $request['status'] === 400) {
+            throw new CustomerNotFound();
+        }
+
+        if (isset($request['code'], $request['status']) && $request['code'] === 1 && $request['status'] === 400) {
+            /*Deposit not found*/
             throw new CustomerNotFound();
         }
 
@@ -209,18 +218,19 @@ class Belt
     }
 
     public function openDeposit(
-        int $depId,
-        int $clientId,
+        int    $depId,
+        int    $clientId,
         string $codeFilial,
         string $date,
         string $amount,
         string $account,
         string $codeFilial2,
         string $isInfoOwner,
-        int $depType,
+        int    $depType,
         string $questionnaire,
         string $cardNumber
-    ) {
+    )
+    {
         $request = $this->sendRequest('post', 'deposit/open', [
             'depId' => $depId,
             'clientId' => $clientId,
