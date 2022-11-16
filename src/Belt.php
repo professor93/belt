@@ -5,6 +5,7 @@ namespace Uzbek\Belt;
 use Illuminate\Support\Facades\Http;
 use Uzbek\Belt\Exceptions\CustomerNotFound;
 use Uzbek\Belt\Exceptions\InvalidParameters;
+use Uzbek\Belt\Exceptions\NotFound;
 
 class Belt
 {
@@ -16,10 +17,13 @@ class Belt
             ->withBasicAuth($config['username'], $config['password'])->$method($url, $data)
             ->throw(function ($response, $e) {
                 if ($response->status() === 400 && $response->json()['code'] === 3) {
-                    throw new CustomerNotFound();
+                    throw new CustomerNotFound('Customer not found');
                 }
                 if ($response->status() === 400 && $response->json()['code'] === 0) {
-                    throw new InvalidParameters();
+                    throw new InvalidParameters('Invalid parameters');
+                }
+                if ($response->status() === 400 && $response['code'] === 1) {
+                    throw new NotFound('Not found');
                 }
                 throw $e;
             })->json();
