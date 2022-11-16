@@ -10,5 +10,4 @@ namespace Uzbek\Belt\Exceptions;
 
 class InvalidParameters extends \Exception
 {
-
 }
