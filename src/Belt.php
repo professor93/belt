@@ -127,6 +127,14 @@ class Belt
         return false;
     }
 
+    public function depositCalculator(string $depId, string $amount)
+    {
+        return $this->sendRequest('post', 'deposit/calculator', [
+            "depId" => $depId,
+            "amount" => $amount
+        ]);
+    }
+
     public function getAccountTurnoverForLoan(string $account, string $codeFilial, int $pageNumber, int $pageSize, int $type, string $dateBegin, string $dateClose)
     {
         $request = $this->sendRequest('post', 'account/turnover-for-loan', [
@@ -222,18 +230,19 @@ class Belt
     }
 
     public function openDeposit(
-        int $depId,
-        int $clientId,
+        int    $depId,
+        int    $clientId,
         string $codeFilial,
         string $date,
         string $amount,
         string $account,
         string $codeFilial2,
         string $isInfoOwner,
-        int $depType,
+        int    $depType,
         string $questionnaire,
         string $cardNumber
-    ) {
+    )
+    {
         $request = $this->sendRequest('post', 'deposit/open', [
             'depId' => $depId,
             'clientId' => $clientId,
