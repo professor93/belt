@@ -129,10 +129,16 @@ class Belt
 
     public function depositCalculator(string $depId, string $amount)
     {
-        return $this->sendRequest('post', 'deposit/calculator', [
+        $request = $this->sendRequest('post', 'deposit/calculator', [
             "depId" => $depId,
             "amount" => $amount
         ]);
+
+        if (isset($request['data']) && $request['data']) {
+            return $request['data'];
+        }
+
+        return $request;
     }
 
     public function getAccountTurnoverForLoan(string $account, string $codeFilial, int $pageNumber, int $pageSize, int $type, string $dateBegin, string $dateClose)
