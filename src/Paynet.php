@@ -18,7 +18,7 @@ class Paynet
     protected string $username;
     protected string $password;
     protected string $terminalId;
-    protected string|null $token;
+    public string $token;
     protected PendingRequest $client;
     protected string|null $last_uid;
     protected int $tokenLifeTime;
@@ -50,6 +50,7 @@ class Paynet
             fn() => $this->sendRequest('login', [
                 'username' => $this->username,
                 'password' => $this->password,
+                'terminalId' => $this->terminalId,
             ])['result']['token']
         );
     }
@@ -65,7 +66,7 @@ class Paynet
             'method' => $method,
             'params' => $params,
             'id' => $uid,
-            'token' => $this->token,
+            'token' => $this->token ?? '',
         ])->throw(fn($r, $e) => self::catchHttpRequestError($r, $e))->json();
 
         return $res;
