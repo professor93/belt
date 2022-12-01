@@ -131,8 +131,8 @@ class Belt
     public function depositCalculator(string $depId, string $amount)
     {
         $request = $this->sendRequest('post', 'deposit/calculator', [
-            "depId" => $depId,
-            "amount" => $amount
+            'depId' => $depId,
+            'amount' => $amount,
         ]);
 
         if (isset($request['data']) && $request['data']) {
@@ -237,19 +237,18 @@ class Belt
     }
 
     public function openDeposit(
-        int    $depId,
-        int    $clientId,
+        int $depId,
+        int $clientId,
         string $codeFilial,
         string $date,
         string $amount,
         string $account,
         string $codeFilial2,
         string $isInfoOwner,
-        int    $depType,
+        int $depType,
         string $questionnaire,
         string $cardNumber
-    )
-    {
+    ) {
         $request = $this->sendRequest('post', 'deposit/open', [
             'depId' => $depId,
             'clientId' => $clientId,
