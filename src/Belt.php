@@ -9,13 +9,14 @@ use Uzbek\Belt\Exceptions\NotFound;
 
 class Belt
 {
-    private function sendRequest(string $method, string $url, array $data = [])
+    private function sendRequest(string $method, string $url, array|null $data = null)
     {
+        $data ??= [];
         $config = config('belt');
 
         return Http::baseUrl($config['base_url'])
             ->withBasicAuth($config['username'], $config['password'])->$method($url, $data)
-            ->throw(function ($response, $e) {
+            ->throw(static function ($response, $e) {
                 if ($response->status() === 400 && $response->json()['code'] === 3) {
                     throw new CustomerNotFound('Customer not found');
                 }
@@ -268,5 +269,10 @@ class Belt
         }
 
         return false;
+    }
+
+    public function paynet(): Paynet
+    {
+        return new Paynet();
     }
 }
