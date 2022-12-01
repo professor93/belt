@@ -15,12 +15,19 @@ use Ramsey\Uuid\Uuid;
 class Paynet
 {
     protected mixed $config;
+
     protected string $username;
+
     protected string $password;
+
     protected string $terminalId;
+
     protected string|null $token;
+
     protected PendingRequest $client;
+
     protected string|null $last_uid;
+
     protected int $tokenLifeTime;
 
     public function __construct()
@@ -31,7 +38,7 @@ class Paynet
         $this->terminalId = $this->config['terminal_id'];
         $this->tokenLifeTime = $this->config['token_life_time'] ?? 60 * 60 * 24;
 
-        $proxy_url = $this->config['proxy_url'] ?? (($this->config['proxy_proto'] ?? '') . '://' . ($this->config['proxy_host'] ?? '') . ':' . ($this->config['proxy_port'] ?? '')) ?? '';
+        $proxy_url = $this->config['proxy_url'] ?? (($this->config['proxy_proto'] ?? '').'://'.($this->config['proxy_host'] ?? '').':'.($this->config['proxy_port'] ?? '')) ?? '';
         $options = is_string($proxy_url) && str_contains($proxy_url, '://') && strlen($proxy_url) > 12 ? ['proxy' => $proxy_url] : [];
 
         $this->client = Http::baseUrl($this->config['base_url'])->withHeaders([
@@ -47,7 +54,7 @@ class Paynet
         $this->token = cache()->remember(
             'paynet_token',
             $this->tokenLifeTime,
-            fn() => $this->sendRequest('login', [
+            fn () => $this->sendRequest('login', [
                 'username' => $this->username,
                 'password' => $this->password,
             ])['result']['token']
@@ -66,7 +73,7 @@ class Paynet
             'params' => $params,
             'id' => $uid,
             'token' => $this->token,
-        ])->throw(fn($r, $e) => self::catchHttpRequestError($r, $e))->json();
+        ])->throw(fn ($r, $e) => self::catchHttpRequestError($r, $e))->json();
 
         return $res;
     }
