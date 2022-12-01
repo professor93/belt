@@ -269,9 +269,4 @@ class Belt
 
         return false;
     }
-
-    public function paynet(): Paynet
-    {
-        return new Paynet();
-    }
 }
