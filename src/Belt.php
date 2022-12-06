@@ -52,7 +52,7 @@ class Belt
 
 
         if(isset($request['code']) && $request['code'] === 0) {
-            return $request['responseBody']['responseBody'];
+            return $request['responseBody'];
         }
 
         return null;
