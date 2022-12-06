@@ -3,12 +3,18 @@
 namespace Uzbek\Belt;
 
 use Illuminate\Support\Facades\Http;
+use Uzbek\Belt\Exceptions\CardNotFound;
 use Uzbek\Belt\Exceptions\CustomerNotFound;
 use Uzbek\Belt\Exceptions\InvalidParameters;
 use Uzbek\Belt\Exceptions\NotFound;
 
 class Belt
 {
+    public function getAccounts(int $clientId)
+    {
+        return $this->sendRequest('get', "client/{$clientId}/accounts/active");
+    }
+
     private function sendRequest(string $method, string $url, array|null $data = null)
     {
         $data ??= [];
@@ -30,17 +36,26 @@ class Belt
             })->json();
     }
 
-    public function getAccounts(int $clientId)
-    {
-        return $this->sendRequest('get', "client/{$clientId}/accounts/active");
-    }
-
+    /**
+     * @throws InvalidParameters
+     * @throws CustomerNotFound
+     * @throws NotFound
+     * @throws CardNotFound
+     */
     public function getCards(int $clientId, int $cardCode)
     {
-        return $this->sendRequest('post', 'card/get-by-client-id-dgb', [
-            'clientId' => $clientId,
-            'cardCode' => $cardCode, /*(1 - uzcard, 2 - humo, 3 - visa)*/
-        ]);
+        $request = $this->sendRequest('post', 'card/get-by-client-id-dgb', compact('clientId', 'cardCode'));
+
+        if(isset($request['code'], $request['responseBody']['code']) && $request['responseBody']['code'] === 2) {
+            throw new CardNotFound('Card not found');
+        }
+
+
+        if(isset($request['code']) && $request['code'] === 0) {
+            return $request['responseBody']['responseBody'];
+        }
+
+        return null;
     }
 
     public function getClientCreditList(int $clientId)
@@ -237,18 +252,19 @@ class Belt
     }
 
     public function openDeposit(
-        int $depId,
-        int $clientId,
+        int    $depId,
+        int    $clientId,
         string $codeFilial,
         string $date,
         string $amount,
         string $account,
         string $codeFilial2,
         string $isInfoOwner,
-        int $depType,
+        int    $depType,
         string $questionnaire,
         string $cardNumber
-    ) {
+    )
+    {
         $request = $this->sendRequest('post', 'deposit/open', [
             'depId' => $depId,
             'clientId' => $clientId,
