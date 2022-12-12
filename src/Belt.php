@@ -265,20 +265,9 @@ class Belt
         string $cardNumber
     )
     {
-        $request = $this->sendRequest('post', 'deposit/open', [
-            'depId' => $depId,
-            'clientId' => $clientId,
-            'codeFilial' => $codeFilial,
-            'date' => $date,
-            'amount' => $amount,
-            'account' => $account,
-            'codeFilial2' => $codeFilial2,
-            'isInfoOwner' => $isInfoOwner,
-            'depType' => $depType,
-            'questionnaire' => $questionnaire,
-            'cardNumber' => $cardNumber,
-        ]);
+        $request = $this->sendRequest('post', 'deposit/open', compact('depId', 'clientId', 'codeFilial', 'date', 'amount', 'account', 'codeFilial2', 'isInfoOwner', 'depType', 'questionnaire', 'cardNumber'));
 
+        return $request;
         if (isset($request['code'], $request['responseBody']) && $request['code'] === 0 && $request['responseBody']) {
             return $request['responseBody'];
         }
