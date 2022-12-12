@@ -50,7 +50,6 @@ class Belt
             throw new CardNotFound('Card not found');
         }
 
-
         if (isset($request['code']) && $request['code'] === 0) {
             return $request['responseBody'];
         }
@@ -252,19 +251,18 @@ class Belt
     }
 
     public function openDeposit(
-        int         $depId,
-        int         $clientId,
-        string      $codeFilial,
-        string      $date,
-        string      $amount,
-        string      $account,
-        string      $codeFilial2,
-        string      $isInfoOwner,
-        int         $depType,
+        int $depId,
+        int $clientId,
+        string $codeFilial,
+        string $date,
+        string $amount,
+        string $account,
+        string $codeFilial2,
+        string $isInfoOwner,
+        int $depType,
         string|null $questionnaire = null,
-        string      $cardNumber
-    )
-    {
+        string $cardNumber
+    ) {
         $request = $this->sendRequest('post', 'deposit/open', compact('depId', 'clientId', 'codeFilial', 'date', 'amount', 'account', 'codeFilial2', 'isInfoOwner', 'depType', 'questionnaire', 'cardNumber'));
 
         return $request;
@@ -291,8 +289,7 @@ class Belt
         string $purposeCode,
         string $purposeName,
         string $amount,
-    )
-    {
+    ) {
         $request = $this->sendRequest('post', 'transactions/formation', [
             'documents' => [
                 'type' => $type,
@@ -316,7 +313,7 @@ class Belt
                     'name' => $purposeName,
                 ],
                 'amount' => $amount,
-            ]
+            ],
         ]);
 
         return $request;
