@@ -252,17 +252,17 @@ class Belt
     }
 
     public function openDeposit(
-        int    $depId,
-        int    $clientId,
-        string $codeFilial,
-        string $date,
-        string $amount,
-        string $account,
-        string $codeFilial2,
-        string $isInfoOwner,
-        int    $depType,
-        string $questionnaire,
-        string $cardNumber
+        int         $depId,
+        int         $clientId,
+        string      $codeFilial,
+        string      $date,
+        string      $amount,
+        string      $account,
+        string      $codeFilial2,
+        string      $isInfoOwner,
+        int         $depType,
+        string|null $questionnaire = null,
+        string      $cardNumber
     )
     {
         $request = $this->sendRequest('post', 'deposit/open', compact('depId', 'clientId', 'codeFilial', 'date', 'amount', 'account', 'codeFilial2', 'isInfoOwner', 'depType', 'questionnaire', 'cardNumber'));
