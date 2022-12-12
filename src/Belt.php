@@ -46,12 +46,12 @@ class Belt
     {
         $request = $this->sendRequest('post', 'card/get-by-client-id-dgb', compact('clientId', 'cardCode'));
 
-        if(isset($request['code'], $request['responseBody']['code']) && $request['responseBody']['code'] === 2) {
+        if (isset($request['code'], $request['responseBody']['code']) && $request['responseBody']['code'] === 2) {
             throw new CardNotFound('Card not found');
         }
 
 
-        if(isset($request['code']) && $request['code'] === 0) {
+        if (isset($request['code']) && $request['code'] === 0) {
             return $request['responseBody'];
         }
 
@@ -268,10 +268,57 @@ class Belt
         $request = $this->sendRequest('post', 'deposit/open', compact('depId', 'clientId', 'codeFilial', 'date', 'amount', 'account', 'codeFilial2', 'isInfoOwner', 'depType', 'questionnaire', 'cardNumber'));
 
         return $request;
-        if (isset($request['code'], $request['responseBody']) && $request['code'] === 0 && $request['responseBody']) {
+        /*if (isset($request['code'], $request['responseBody']) && $request['code'] === 0 && $request['responseBody']) {
             return $request['responseBody'];
         }
 
-        return false;
+        return false;*/
+    }
+
+    public function transactionsFormation(
+        string $type,
+        string $externalId,
+        string $docNum,
+        string $docDate,
+        string $senderAccount,
+        string $senderCodeFilial,
+        string $senderTax,
+        string $senderName,
+        string $recipientAccount,
+        string $recipientCodeFilial,
+        string $recipientTax,
+        string $recipientName,
+        string $purposeCode,
+        string $purposeName,
+        string $amount,
+    )
+    {
+        $request = $this->sendRequest('post', 'transactions/formation', [
+            'documents' => [
+                'type' => $type,
+                'externalId' => $externalId,
+                'docNum' => $docNum,
+                'docDate' => $docDate,
+                'sender' => [
+                    'account' => $senderAccount,
+                    'codeFilial' => $senderCodeFilial,
+                    'tax' => $senderTax,
+                    'name' => $senderName,
+                ],
+                'recipient' => [
+                    'account' => $recipientAccount,
+                    'codeFilial' => $recipientCodeFilial,
+                    'tax' => $recipientTax,
+                    'name' => $recipientName,
+                ],
+                'purpose' => [
+                    'code' => $purposeCode,
+                    'name' => $purposeName,
+                ],
+                'amount' => $amount,
+            ]
+        ]);
+
+        return $request;
     }
 }
