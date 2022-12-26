@@ -292,27 +292,29 @@ class Belt
     ) {
         $request = $this->sendRequest('post', 'transactions/formation', [
             'documents' => [
-                'type' => $type,
-                'externalId' => $externalId,
-                'docNum' => $docNum,
-                'docDate' => $docDate,
-                'sender' => [
-                    'account' => $senderAccount,
-                    'codeFilial' => $senderCodeFilial,
-                    'tax' => $senderTax,
-                    'name' => $senderName,
-                ],
-                'recipient' => [
-                    'account' => $recipientAccount,
-                    'codeFilial' => $recipientCodeFilial,
-                    'tax' => $recipientTax,
-                    'name' => $recipientName,
-                ],
-                'purpose' => [
-                    'code' => $purposeCode,
-                    'name' => $purposeName,
-                ],
-                'amount' => $amount,
+                [
+                    'type' => $type,
+                    'externalId' => $externalId,
+                    'docNum' => $docNum,
+                    'docDate' => $docDate,
+                    'sender' => [
+                        'account' => $senderAccount,
+                        'codeFilial' => $senderCodeFilial,
+                        'tax' => $senderTax,
+                        'name' => $senderName,
+                    ],
+                    'recipient' => [
+                        'account' => $recipientAccount,
+                        'codeFilial' => $recipientCodeFilial,
+                        'tax' => $recipientTax,
+                        'name' => $recipientName,
+                    ],
+                    'purpose' => [
+                        'code' => $purposeCode,
+                        'name' => $purposeName,
+                    ],
+                    'amount' => $amount,
+                ]
             ],
         ]);
 
