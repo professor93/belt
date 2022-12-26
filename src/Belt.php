@@ -314,7 +314,7 @@ class Belt
                         'name' => $purposeName,
                     ],
                     'amount' => $amount,
-                ]
+                ],
             ],
         ]);
 
