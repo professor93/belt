@@ -260,7 +260,7 @@ class Belt
         string $codeFilial2,
         string $isInfoOwner,
         int $depType,
-        string|null $questionnaire = null,
+        string $questionnaire = null,
         string $cardNumber
     ) {
         $request = $this->sendRequest('post', 'deposit/open', compact('depId', 'clientId', 'codeFilial', 'date', 'amount', 'account', 'codeFilial2', 'isInfoOwner', 'depType', 'questionnaire', 'cardNumber'));
@@ -319,5 +319,10 @@ class Belt
         ]);
 
         return $request;
+    }
+
+    public function investingMoney(string $savDepId, string $account, string $codeFilial, string $amount)
+    {
+        return $this->sendRequest('post', 'deposit/investing-money', compact('savDepId', 'account', 'codeFilial', 'amount'));
     }
 }
